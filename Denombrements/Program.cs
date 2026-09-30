@@ -25,7 +25,7 @@ namespace Denombrements
                 Console.Write("Choix :                            ");
                 choix = Console.ReadLine();
 
-                int nbTotal=0, k, sousEnsemble=0;
+                int nbTotal=0, sousEnsemble=0;
                 long resultat1=1, resultat2=1, resultat3=1;
 
                 if (choix == "0")
