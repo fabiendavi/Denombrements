@@ -1,73 +1,109 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Denombrements
 {
     class Program
     {
+        static long Multiplication(int valeurDepart, int valeurArrivee)
+        {
+            long resultat = 1;
+            for (int k = valeurDepart; k <= valeurArrivee; k++)
+            {
+                resultat *= k;
+            }
+            return resultat;
+        } 
         static void Main(string[] args)
         {
-            int c = 1;
-            while (c != 0)
+            string choix = "1";
+            while (choix != "0")
             {
                 Console.WriteLine("Permutation ...................... 1");
                 Console.WriteLine("Arrangement ...................... 2");
                 Console.WriteLine("Combinaison ...................... 3");
                 Console.WriteLine("Quitter .......................... 0");
                 Console.Write("Choix :                            ");
-                c = int.Parse(Console.ReadLine());
+                choix = Console.ReadLine();
 
-                if (c == 0) { Environment.Exit(0); }
+                int nbTotal=0, sousEnsemble=0;
+                long resultat1=1, resultat2=1, resultat3=1;
 
-                if (c == 1)
+                if (choix == "0")
                 {
-                    Console.Write("nombre total d'éléments à gérer = "); // le nombre d'éléments à gérer
-                    int n = int.Parse(Console.ReadLine()); // saisir le nombre
-                                                           // calcul de r
-                    long r = 1;
-                    for (int k = 1; k <= n; k++)
-                        r *= k;
-                    Console.WriteLine(n + "! = " + r);
+                    Environment.Exit(0);
+                }
+
+                if (choix == "1" || choix == "2" || choix == "3")
+                {
+                    bool saisieValide = false; // on crée une variable booléenne pour vérifier que n soit bien entier
+                    while (!saisieValide)
+                    {
+                        try
+                        {
+                            Console.Write("nombre total d'éléments à gérer = ");
+                            nbTotal = int.Parse(Console.ReadLine());
+                            saisieValide = true;
+                        }
+                        catch
+                        {
+                            Console.WriteLine("Erreur de saisie : veuillez entrer un nombre entier !");
+                        }
+                    }
+                    
                 }
                 else
                 {
-                    if (c == 2)
+                    Console.WriteLine("Erreur de saisie");
+                }
+                if (choix == "2"|| choix == "3")
+                {
+                    bool saisieValide2 = false;
+                    while (!saisieValide2)
                     {
-                        Console.Write("nombre total d'éléments à gérer = "); // le nombre d'éléments à gérer
-                        int t = int.Parse(Console.ReadLine()); // saisir le nombre
-                        Console.Write("nombre d'éléments dans le sous ensemble = "); // le sous ensemble
-                        int n = int.Parse(Console.ReadLine()); // saisir le nombre
-                        // calcul de r
-                        long r = 1;
-                        for (int k = (t - n + 1); k <= t; k++)
-                            r *= k;
-                        //Console.WriteLine("résultat = " + (r1 / r2));
-                        Console.WriteLine("A(" + t + "/" + n + ") = " + r);
+                        try
+                        {
+                            Console.Write("nombre d'éléments dans le sous ensemble = ");
+                            sousEnsemble = int.Parse(Console.ReadLine());
+                            saisieValide2 = true;
+                        }
+                        catch
+                        {
+                            Console.WriteLine("Erreur de saisie : veuillez entrer un nombre entier !");
+                        }
                     }
-                    else
-                    {
-                        Console.Write("nombre total d'éléments à gérer = "); // le nombre d'éléments à gérer
-                        int t = int.Parse(Console.ReadLine()); // saisir le nombre
-                        Console.Write("nombre d'éléments dans le sous ensemble = "); // le sous ensemble
-                        int n = int.Parse(Console.ReadLine()); // saisir le nombre
-                        // calcul de r1
-                        long r1 = 1;
-                        for (int k = (t - n + 1); k <= t; k++)
-                            r1 *= k;
-                        // calcul de r2
-                        long r2 = 1;
-                        for (int k = 1; k <= n; k++)
-                            r2 *= k;
-                        // calcul de r3
-                        //Console.WriteLine("résultat = " + (r1 / r2));
-                        Console.WriteLine("C(" + t + "/" + n + ") = " + (r1 / r2));
-                    }
+                    
+                }
+                
+                switch (choix)
+                {
+                    case "1":
+
+                        // calcul de resultat1
+                        resultat1 = Multiplication(1, nbTotal);
+                        Console.WriteLine(nbTotal + "! = " + resultat1);
+                        break;
+
+                    case "2":
+
+                        // calcul de resultat2
+                        resultat2 = Multiplication(nbTotal - sousEnsemble + 1, nbTotal);
+                        Console.WriteLine("A(" + sousEnsemble + "/" + nbTotal + ") = " + resultat2);
+                        break;
+
+                    case "3":
+
+                        // calcul de resultat2
+                        resultat2 = Multiplication(nbTotal - sousEnsemble + 1, nbTotal);
+
+                        // calcul de resultat3
+                        resultat3 = Multiplication(1, sousEnsemble);
+
+                        Console.WriteLine("C(" + sousEnsemble + "/" + nbTotal + ") = " + (resultat2 / resultat3));
+                        break;
+                    default:
+                        break;
                 }
             }
-            Console.ReadLine();
         }
     }
 }
